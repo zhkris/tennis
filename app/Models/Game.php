@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Game;
+use App\Models\Championship;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Duel extends Model
+class Game extends Model
 {
     use HasFactory;
 
@@ -18,14 +17,6 @@ class Duel extends Model
         'player_one_id' => 'integer',
         'player_two_id' => 'integer',
     ];
-
-    public function championship(): BelongsTo
-    {
-        return $this->belongsTo(
-            related: Championship::class,
-            foreignKey: 'championship_id'
-        );
-    }
 
     public function playerOne(): BelongsTo
     {
@@ -43,19 +34,27 @@ class Duel extends Model
         );
     }
 
+    public function championship(): BelongsTo
+    {
+        return $this->belongsTo(
+            related: Championship::class,
+            foreignKey: 'championship_id'
+        );
+    }
+
+    public function duel(): BelongsTo
+    {
+        return $this->belongsTo(
+            related: Duel::class,
+            foreignKey: 'duel_id'
+        );
+    }
+
     public function winner(): BelongsTo
     {
         return $this->belongsTo(
             related: Player::class,
             foreignKey: 'winner_id'
-        );
-    }
-
-    public function games(): HasMany
-    {
-        return $this->hasMany(
-            related: Game::class,
-            foreignKey: 'duel_id'
         );
     }
 }

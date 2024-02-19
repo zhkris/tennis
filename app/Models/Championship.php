@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Duel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Championship extends Model
 {
@@ -19,9 +20,15 @@ class Championship extends Model
 
             for ($i = 0; $i < $players->count(); $i++) {
                 for ($j = $i + 1; $j < $players->count(); $j++) {
-                    $championship->duels()->create([
+                    $duel = $championship->duels()->create([
                         'player_one_id' => $players[$i],
                         'player_two_id' => $players[$j]
+                    ]);
+
+                    $duel->games()->create([
+                        'player_one_id' => $players[$i],
+                        'player_two_id' => $players[$j],
+                        'championship_id' => $championship->id
                     ]);
                 }
             }

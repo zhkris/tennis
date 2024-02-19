@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShowChampionship;
+use App\Http\Controllers\ShowChampionships;
+use App\Http\Controllers\ShowDuel;
 use App\Models\Championship;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route::get('/', function () {
+// Route::get('/test', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
 //         'canRegister' => Route::has('register'),
@@ -16,17 +19,9 @@ use Inertia\Inertia;
 // });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Championships', [
-            'championships' => Championship::all()
-        ]);
-    })->name('championships');
-
-    Route::get('/championships/{championship}', function (Championship $championship) {
-        return Inertia::render('ChampionshipDuels', [
-            'championship' => $championship
-        ]);
-    })->name('championships.show');
+    Route::get('/', ShowChampionships::class)->name('championships');
+    Route::get('/championships/{championship}', ShowChampionship::class)->name('championships.show');
+    Route::get('/championships/duels/{duel}', ShowDuel::class)->name('duels.show');
 });
 
 Route::middleware('auth')->group(function () {

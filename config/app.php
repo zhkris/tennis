@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 
 return [
 
@@ -159,6 +160,7 @@ return [
         /*
          * Package Service Providers...
          */
+        IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...
